@@ -1,44 +1,40 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 
 import s from './FormContacts.module.css';
 
-class FormContacts extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+export default function FormContacts({ updateState, contacts }) {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+  const reset = () => {
+          setName('');
+          setNumber('');
+  }
 
-  reset = () => {
-    this.setState({ name: '', number: '' });
-  };
+  const alertOnExistedContacts = () => {
 
-  alertOnExistedContacts = () => {
-        if (
-            this.props.contacts.find(
-              contact => contact.name === this.state.name,
-            )
-          ) {
-            alert(`${this.state.name} is already in the contacts!`);
-            this.reset();
-            return;
-          }
-        }
+    if (
+      contacts.find(
+        contact => contact.name === name,
+      )
+    ) {
+      alert(`${name} is already in the contacts!`);
+      reset();
+      return;
 
-  render() {
-    return (
+    }
+  }
+
+  return (
       <form
         className={s.Form}
         onSubmit={e => {
           e.preventDefault();
-          this.alertOnExistedContacts();
-          this.props.updateState({ id: nanoid(), ...this.state });
-          this.reset();
+          alertOnExistedContacts();
+          updateState({ id: nanoid(), name, number });
+          reset();
         }}
       >
         <label className={s.name}>
@@ -50,8 +46,8 @@ class FormContacts extends Component {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             placeholder="name goes here"
             required
-            value={this.state.name}
-            onChange={this.handleChange}
+            value={name}
+            onChange={e => {setName( e.target.value)}}
           />
         </label>
         <label className={s.phone}>
@@ -63,8 +59,8 @@ class FormContacts extends Component {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             placeholder="number goes here"
             required
-            value={this.state.number}
-            onChange={this.handleChange}
+            value={number}
+            onChange={e => {setNumber( e.target.value)}}
           />
         </label>
         <button className={s.button} type="submit">
@@ -72,10 +68,8 @@ class FormContacts extends Component {
         </button>
       </form>
     );
-  }
 }
 
-export default FormContacts;
 
 FormContacts.propTypes = {
   updateState: PropTypes.func,

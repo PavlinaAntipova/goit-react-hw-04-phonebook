@@ -15,7 +15,8 @@ function ContactsList({ contacts, deleteFunc}) {
         
         {contacts.length
           ? contacts.map(contact => (
-              <ContactItem
+            <ContactItem
+                key={contact.id}
                 id={contact.id}
                 name={contact.name}
                 number={contact.number}
