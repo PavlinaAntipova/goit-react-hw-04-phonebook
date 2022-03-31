@@ -9,7 +9,7 @@ import s from './App.module.css';
 
 export default function App() {
 
-  const [contacts, setContacts] = useState(JSON.parse(window.localStorage.getItem("contacts")) ?? '');
+  const [contacts, setContacts] = useState(JSON.parse(window.localStorage.getItem("contacts")) ?? []);
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
@@ -27,6 +27,8 @@ export default function App() {
     const filteredContacts = contacts.filter(contact =>
       contact.name.toLocaleLowerCase().includes(normalizeName),
     );
+    console.log(normalizeName);
+    console.log(filteredContacts);
     return filteredContacts;
   };
 
