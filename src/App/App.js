@@ -9,7 +9,7 @@ import s from './App.module.css';
 
 export default function App() {
 
-  const [contacts, setContacts] = useState(JSON.parse(window.localStorage.getItem("contacts") ?? ''));
+  const [contacts, setContacts] = useState(JSON.parse(window.localStorage.getItem("contacts")) ?? '');
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
