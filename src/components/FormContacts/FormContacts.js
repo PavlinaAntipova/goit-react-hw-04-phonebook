@@ -13,29 +13,21 @@ export default function FormContacts({ updateState, contacts }) {
           setNumber('');
   }
 
-  const alertOnExistedContacts = () => {
-
-    if (
-      contacts.find(
-        contact => contact.name === name,
-      )
-    ) {
-      alert(`${name} is already in the contacts!`);
-      reset();
-      return;
-
-    }
-  }
-
+  const checkingExistContact = contacts.find(contact => contact.name === name);
   return (
+    
       <form
-        className={s.Form}
-        onSubmit={e => {
-          e.preventDefault();
-          alertOnExistedContacts();
-          updateState({ id: nanoid(), name, number });
+      className={s.Form}
+      onSubmit={e => {
+        e.preventDefault();
+        if (checkingExistContact) {
+          alert(`${name} is already in the contacts!`);
           reset();
-        }}
+          return;
+        }
+        updateState({ id: nanoid(), name, number });
+        reset();
+      }}
       >
         <label className={s.name}>
           Name

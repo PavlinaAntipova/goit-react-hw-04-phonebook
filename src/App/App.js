@@ -27,8 +27,6 @@ export default function App() {
     const filteredContacts = contacts.filter(contact =>
       contact.name.toLocaleLowerCase().includes(normalizeName),
     );
-    console.log(normalizeName);
-    console.log(filteredContacts);
     return filteredContacts;
   };
 
